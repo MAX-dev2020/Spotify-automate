@@ -23,10 +23,12 @@ if token:
     sp = spotipy.Spotify(auth=token)
 
     search_song = sp.search(q=songname.casefold(),
-                            limit=5, offset=0, type='track', market=None)
-    for i in range(5):
-        print(json.dumps(search_song["tracks"]["items"]
-                         [i]["artists"], sort_keys=True, indent=4))
+                            limit=1, offset=0, type='track', market=None)
+    for i in range(1):
+        print(json.dumps(search_song["tracks"]
+                         ["items"][0]["name"], sort_keys=True, indent=4))
+        print(json.dumps(search_song["tracks"]["items"][0]
+                         ["artists"][0]["name"], sort_keys=True, indent=4))
 """
     print("Enter album name, if it's a single, type N0ne")
     albumname = input("Enter the album name: ")

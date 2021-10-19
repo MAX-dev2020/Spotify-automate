@@ -8,7 +8,7 @@ import eyed3
 # import readfiles
 USERNAME = '1hja3phrnit6soklb701fpgwo'
 CLIENT_ID = 'a9ead43c8e184e8dbe3520305d4dffe5'
-CLIENT_SECRET = '6340f62892584212b728e211c926c2ee'
+CLIENT_SECRET = 'd07ee27166f0477cafb0f358a1eed8d9'
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
 
@@ -37,12 +37,14 @@ if token:
     albumname = input("Enter the album name: ")
     songname = input("Enter the track name: ")
     artistname = input(
-        "Enter artist name(if you don't know the artist name press enter): ")
+        "Enter artist name(press enter if you don't know the artist name): ")
+
     wantstocreate = input(
         "Enter 0 to create a new playlist or 1 to not create a new playlist: ")
 
     if(wantstocreate == '0'):
         newplaylistname = input("Enter the name of your playlist: ")
+
     if (albumname != "N0ne"):
         search_albumid = sp.search(q=albumname.casefold(),
                                    limit=50, offset=0, type='album', market=None)
@@ -65,6 +67,7 @@ if token:
                 list = [album_tracks["items"][item]["id"]]
                 # print(songid)
                 break
+
     elif(artistname == None):
         search_song = sp.search(q=songname.casefold(),
                                 limit=1, offset=0, type='track', market=None)
@@ -75,6 +78,7 @@ if token:
             # try:
             search_song = sp.search(q=songname.casefold(),
                                     limit=10, offset=0, type='track', market=None)
+            songid = search_song["tracks"]["items"][i]["id"]
         # songid = search_song["tracks"]["items"][i]["id"]
         # list = [search_song["tracks"]["items"][i]["id"]]
         # if(artistname.casefold() == search_song["tracks"]["items"][i]["album"]
@@ -100,7 +104,7 @@ if token:
                         list = [search_song["tracks"]["items"][i]["id"]]
 
                         # print(
-                        # "".join(artist_name_spaceremove .split()).replace('.', ''))
+                        # "".join(artist_name_spaceremove .split()).replace('.', ''))sa as
                         flag = 1
                         break
                 except IndexError:
@@ -113,7 +117,7 @@ if token:
 
             if(flag == 1):
                 break
-
+        print(songid)
         # break
 
     count = 0
@@ -176,7 +180,7 @@ if token:
                 print("song already exists")
                 exists = 1
                 break
-
+        print(playlist_id)
         if(exists != 1):
             addTrack = sp.playlist_add_items(playlist_id, list, position=0)
             print('song added')
