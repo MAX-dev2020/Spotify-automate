@@ -1,5 +1,5 @@
 
-# afte running the program spotify will redirect you to google.com for your permmision, grant the permission and copy the url to cmd
+# after running the program spotify will redirect you to google.com for your permmision, grant the permission and copy the url to cmd
 from posixpath import expanduser
 import string
 import os
