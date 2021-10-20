@@ -14,8 +14,8 @@ from spotipy.oauth2 import SpotifyOAuth
 import json
 import sys
 
-USERNAME = ''  # enter your username
-CLIENT_ID = ''  # go to spotify dev login from your account and copy your client_id and Client_secert and paste it here
+USERNAME = ''  # enter your spotify username
+CLIENT_ID = ''  # go to "spotify for developers" website,  login from your account, copy your client_id and client_secert and paste it here
 CLIENT_SECRET = ''
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
