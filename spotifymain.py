@@ -15,7 +15,7 @@ import json
 import sys
 
 USERNAME = ''  # enter your username
-CLIENT_ID = ''  # go to spptify dev login with your account and copy client_id and Client_secert
+CLIENT_ID = ''  # go to spptify dev, login with your account, copy and paste your client_id and client_secert_id
 CLIENT_SECRET = ''
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
