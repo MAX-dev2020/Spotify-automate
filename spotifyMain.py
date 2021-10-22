@@ -77,15 +77,15 @@ if token:
                 limitcount = 0
                 limit = 0
                 if(albumname != ''):
-                    albumhyphen = albumname
-                    if('-' in albumhyphen):
-                        albumhyphen = albumhyphen.split("-", 1)
+                    albumotherchar = albumname
+                    if('-' in albumotherchar):
+                        albumotherchar = albumotherchar.split("-", 1)
 
-                        albumname = albumhyphen[0]
-                    if('[' in albumhyphen):
-                        albumname = albumhyphen.split("[", 1)
+                        albumname = albumotherchar[0]
+                    if('[' in albumotherchar):
+                        albumname = albumotherchar.split("[", 1)
 
-                        albumname = albumhyphen[0]
+                        albumname = albumotherchar[0]
 
                     search_albumid = sp.search(q=albumname.casefold(),
                                                limit=50, offset=0, type='album', market=None)
@@ -129,15 +129,15 @@ if token:
                     for i in range(10):
 
                         try:
-                            songhyphen = songname
-                            if('-' in songhyphen):
-                                songhyphen = songhyphen.split("-", 1)
+                            songotherchar = songname
+                            if('-' in songotherchar):
+                                songotherchar = songotherchar.split("-", 1)
 
-                                songname = songhyphen[0]
-                            if('[' in songhyphen):
-                                songname = songhyphen.split("[", 1)
+                                songname = songotherchar[0]
+                            if('[' in songotherchar):
+                                songname = songotherchar.split("[", 1)
 
-                                songname = songhyphen[0]
+                                songname = songotherchar[0]
                                 if(songname != ''):
                                     search_song = sp.search(q=songname.casefold(),
                                                             limit=10, offset=0, type='track', market=None)
@@ -209,7 +209,7 @@ if token:
                             return 1
                     if(flag != 1):
                         createplaylist = sp.user_playlist_create(
-                            '1hja3phrnit6soklb701fpgwo', newplaylistname, public=False, collaborative=False, description='My project')
+                            'USERNAME', newplaylistname, public=False, collaborative=False, description='My project')
                         newplaylistid = sp.current_user_playlists(
                             limit=1, offset=0)
                         newplaylistid = newplaylistid["items"][0]["id"]
@@ -245,7 +245,7 @@ if token:
                                     sys.exit()
 
                     results = sp.user_playlist_tracks(
-                        'zdejs0clebnjaz00zu91k1mrk', playlist_id)
+                        'USERNAME', playlist_id)
                     tracks = results['items']
                     totaltracks = 0
                     while results['next']:
