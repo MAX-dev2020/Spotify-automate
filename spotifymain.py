@@ -14,9 +14,11 @@ from spotipy.oauth2 import SpotifyOAuth
 import json
 import sys
 
-USERNAME = ''  # enter your username
-CLIENT_ID = ''  # go to spotify dev login from your account and copy your client_id and Client_secert and paste it here
-CLIENT_SECRET = ''
+# "https://www.spotify.com/us/account/overview/" copy your username and paste it here
+USERNAME = '1hja3phrnit6soklb701fpgwo'
+# go to "https://developer.spotify.com/",  login with your spotify acount and copy your client_id and client_secert and paste it here
+CLIENT_ID = 'a9ead43c8e184e8dbe3520305d4dffe5'
+CLIENT_SECRET = 'd07ee27166f0477cafb0f358a1eed8d9'
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
 
@@ -77,15 +79,15 @@ if token:
                 limitcount = 0
                 limit = 0
                 if(albumname != ''):
-                    albumhyphen = albumname
-                    if('-' in albumhyphen):
-                        albumhyphen = albumhyphen.split("-", 1)
+                    albumextrachar = albumname
+                    if('-' in albumextrachar):
+                        albumextrachar = albumextrachar.split("-", 1)
 
-                        albumname = albumhyphen[0]
-                    if('[' in albumhyphen):
-                        albumname = albumhyphen.split("[", 1)
+                        albumname = albumextrachar[0]
+                    if('[' in albumextrachar):
+                        albumname = albumextrachar.split("[", 1)
 
-                        albumname = albumhyphen[0]
+                        albumname = albumextrachar[0]
 
                     search_albumid = sp.search(q=albumname.casefold(),
                                                limit=50, offset=0, type='album', market=None)
@@ -129,15 +131,15 @@ if token:
                     for i in range(10):
 
                         try:
-                            songhyphen = songname
-                            if('-' in songhyphen):
-                                songhyphen = songhyphen.split("-", 1)
+                            songextrachar = songname
+                            if('-' in songextrachar):
+                                songextrachar = songextrachar.split("-", 1)
 
-                                songname = songhyphen[0]
-                            if('[' in songhyphen):
-                                songname = songhyphen.split("[", 1)
+                                songname = songextrachar[0]
+                            if('[' in songextrachar):
+                                songname = songextrachar.split("[", 1)
 
-                                songname = songhyphen[0]
+                                songname = songextrachar[0]
                                 if(songname != ''):
                                     search_song = sp.search(q=songname.casefold(),
                                                             limit=10, offset=0, type='track', market=None)
@@ -209,7 +211,7 @@ if token:
                             return 1
                     if(flag != 1):
                         createplaylist = sp.user_playlist_create(
-                            '1hja3phrnit6soklb701fpgwo', newplaylistname, public=False, collaborative=False, description='My project')
+                            USERNAME, newplaylistname, public=False, collaborative=False, description='My project')
                         newplaylistid = sp.current_user_playlists(
                             limit=1, offset=0)
                         newplaylistid = newplaylistid["items"][0]["id"]
@@ -245,7 +247,7 @@ if token:
                                     sys.exit()
 
                     results = sp.user_playlist_tracks(
-                        'zdejs0clebnjaz00zu91k1mrk', playlist_id)
+                        USERNAME, playlist_id)
                     tracks = results['items']
                     totaltracks = 0
                     while results['next']:
