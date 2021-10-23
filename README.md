@@ -8,9 +8,9 @@
 
 #### 1. I wanted to list my local songs on spotify app and listen to them on all of my devices (Phone, TV, Car), but to do that I had to copy the local files onto all of my devices which is time/space consuming and a tedious task.
 
-#### 2. If in case of you have a data loss, you might loose all your local files and your fav songs, so its better for you store it on your spotify app and listen everywhere.
+#### 2. If in case of you have a data loss, you might loose all your local files and your fav songs, so its better to store it or create playlist on spotify and listen everywhere.
 
-#### 3. To do the above mentioned tasks, I had to manually **search** and **add** all of my songs to my spotify account one after one which is a hassle :unamused:
+#### 3. To do the above mentioned tasks, I had to manually **search** and **add** all of my songs to my spotify playlist one after one which is a hassle :unamused:
 
 #### To solve the above problems I bulit **_Spotify-automate_**.
 
@@ -20,7 +20,7 @@
 
 #### 2. Searches all your local songs from the spotify database using spotify API references and adds them to a playlist.
 
-#### 3. So this enables you to listen to all your local songs on any of your devices without having to have the local files on stored on the devices :smile:
+#### 3. So this enables you to listen to all your local songs on any of your devices without having to have the local files stored on other devices :smile:
 
 ##### Spotify has a feature called "Local files" where you can listen to your local songs, but you cannot listen to them on other devices as you need to have a copy of all those songs stored onto your devices(TV or Car), which is not possible. "Local files" feature is not available for every device and gadgets.
 
@@ -32,6 +32,26 @@
 
 ![Copy this](credentials.gif)
 
-### 2. open "spotifymain.py" and paste your credentials.
+### 2. Open "spotifymain.py" and paste your credentials.
 
-![Copy this](pastecreds.png)
+![paste here](pastecreds.png)
+
+### 3. Go to spotify developers website, go to edit settings and add https://www.google.com/ as the redirect URL.
+
+![go to edit settings](editsettings.png)
+
+![add redirect URL](redirect.png)
+
+### 3. copy and paste destination path of your music folder.
+
+### 4. Run the python script.
+
+### 5. After running the program on cmd, it will redirect you to google.com for your permission, grant the permission, copy the URL and paste the URL on cmd.
+
+![paste URL](pasteurl.png)
+
+### 6. Create a new playlist or add the songs to a existing playlist.
+
+### 7. Enjoy your fav songs everywhere :scream_cat:
+
+###### If few songs are not added then the mp3 file dosen't contain proper title, album or artist name.
