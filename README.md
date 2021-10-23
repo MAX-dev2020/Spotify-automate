@@ -4,7 +4,7 @@
 
 #### This is a personal project
 
-## Why I built this program ?
+## Why I built this program?
 
 #### 1. I wanted to list my local songs on spotify app and listen to them on all of my devices (Phone, TV, Car), but to do that I had to copy the local files onto all of my devices which is time/space consuming and a tedious task.
 
@@ -14,7 +14,7 @@
 
 #### To solve the above problems I bulit **_Spotify-automate_**.
 
-## How is my program helpful ?
+## How is my program helpful?
 
 #### 1. **_Spotify-automate_** reads all your local music files.
 
