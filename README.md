@@ -26,4 +26,8 @@
 
 ## How to run **_Spotify-automate_**?
 
-### 1.
+### 1. Before running the python script you have to get to your client_id and client_secret from Spotify developers website.
+
+[Link to the spotify developers website](https://developer.spotify.com/)
+
+![Copy this](credentials.gif)
