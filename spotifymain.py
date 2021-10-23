@@ -15,10 +15,10 @@ import json
 import sys
 
 # "https://www.spotify.com/us/account/overview/" copy your username and paste it here
-USERNAME = '1hja3phrnit6soklb701fpgwo'
+USERNAME = ''
 # go to "https://developer.spotify.com/",  login with your spotify acount and copy your client_id and client_secert and paste it here
-CLIENT_ID = 'a9ead43c8e184e8dbe3520305d4dffe5'
-CLIENT_SECRET = 'd07ee27166f0477cafb0f358a1eed8d9'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
 
@@ -127,7 +127,7 @@ if token:
                 if(limitcount == limit or albumnotfound == True):
                     songcount = 0
                     flag = 0
-                    print("songs name enteres")
+                    print("songs name enters")
                     for i in range(10):
 
                         try:
