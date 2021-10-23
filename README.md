@@ -31,3 +31,7 @@
 [Link to the spotify developers website](https://developer.spotify.com/)
 
 ![Copy this](credentials.gif)
+
+### 2. open "spotifymain.py" and paste your credentials.
+
+![Copy this](pastecreds.gif)
