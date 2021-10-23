@@ -20,4 +20,10 @@
 
 #### 2. Searches all your local songs from the spotify database using spotify API references and adds them to a playlist.
 
-#### 3. So this enables you to listen to all your local songs on any of your devices without having to have the local files on stored on the devices.
+#### 3. So this enables you to listen to all your local songs on any of your devices without having to have the local files on stored on the devices :smile:
+
+##### Spotify has a feature called "Local files" where you can listen to your local songs, but you cannot listen to them on other devices as you need to have a copy of all those songs stored onto your devices(TV or Car), which is not possible. "Local files" feature is not available for every device and gadgets.
+
+## How to run **_Spotify-automate_**?
+
+### 1.
