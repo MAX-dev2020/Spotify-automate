@@ -38,11 +38,11 @@
 
 ### 3. Go to spotify developers website, go to edit settings and add https://www.google.com/ as the redirect URL.
 
-![go to edit settings](editsettings.png)
+![go to edit settings](editsettings.jpeg)
 
 ![add redirect URL](redirect.png)
 
-### 3. copy and paste destination path of your music folder.
+### 3. Copy and paste destination path of your music folder.
 
 ### 4. Run the python script.
 
@@ -50,7 +50,7 @@
 
 ![paste URL](pasteurl.png)
 
-### 6. Create a new playlist or add the songs to a existing playlist.
+### 6. Follow the instructions.
 
 ### 7. Enjoy your fav songs everywhere :scream_cat:
 
