@@ -34,4 +34,4 @@
 
 ### 2. open "spotifymain.py" and paste your credentials.
 
-![Copy this](pastecreds.gif)
+![Copy this](pastecreds.png)
