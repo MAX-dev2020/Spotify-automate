@@ -16,6 +16,8 @@
 
 ## How is my program helpful ?
 
-###
+#### 1. **_Spotify-automate_** reads all your local music files.
 
-As you know spotify has a feature called "Local Files". If you want to listen to your local songs everywhere then you need to store your songs on your all your devices .If you So to listen to your local songs on all your devices you have to search for the song manually and add it to your spotify playlist, but searching and adding 200 or 300 songs is a hassle. To solve this problem i built this program which searchs all your local songs and add to your spotify playlist.
+#### 2. Searches all your local songs from the spotify database using spotify API references and adds them to a playlist.
+
+#### 3. So this enables you to listen to all your local songs on any of your devices without having to have the local files on stored on the devices.
