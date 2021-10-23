@@ -10,9 +10,9 @@
 
 ### 2. If in case of you have a data loss, you might loose all your local files and your fav songs, so its better for you store it on your spotify app and listen everywhere.
 
-### 3. To do the above mentioned tasks, i had to manually **search** and **add** all of my songs to my spotify account one after one which is a hassle.
+### 3. To do the above mentioned tasks, i had to manually **search** and **add** all of my songs to my spotify account one after one which is a hassle :unamused:
 
-### To solve the above problems I bulit **_Spotify-automae_**.
+### To solve the above problems I bulit **_Spotify-automate_**.
 
 ## How is my program helpful ?
 
