@@ -56,4 +56,4 @@
 
 ###### If few songs are not added then the mp3 file dosen't contain proper title, album or artist name.
 
-![video](video.mp4)
+![video](video.gif)
