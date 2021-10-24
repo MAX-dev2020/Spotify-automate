@@ -48,7 +48,7 @@
 
 ### 5. After running the program on cmd, it will redirect you to google.com for your permission, grant the permission, copy the URL and paste the URL on cmd.
 
-![paste URL](pasteurl.png)
+![paste URL](imggif/pasteurl.png)
 
 ### 6. Follow the instructions.
 
