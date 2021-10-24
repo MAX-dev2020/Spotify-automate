@@ -30,17 +30,17 @@
 
 [Link to the spotify developers website](https://developer.spotify.com/)
 
-![Copy this](credentials.gif)
+![Copy this](imggif/credentials.gif)
 
 ### 2. Open "spotifymain.py" and paste your credentials.
 
-![paste here](pastecreds.png)
+![paste here](imggif/pastecreds.png)
 
 ### 3. Go to spotify developers website, go to edit settings and add https://www.google.com/ as the redirect URL.
 
-![go to edit settings](editsettings.jpeg)
+![go to edit settings](imggif/editsettings.jpeg)
 
-![add redirect URL](redirect.png)
+![add redirect URL](imggif/redirect.png)
 
 ### 3. Copy and paste destination path of your music folder.
 
