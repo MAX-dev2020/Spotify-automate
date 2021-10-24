@@ -55,5 +55,3 @@
 ### 7. Enjoy your fav songs everywhere :scream_cat:
 
 ###### If few songs are not added then the mp3 file dosen't contain proper title, album or artist name.
-
-![video](video.mp4)
