@@ -44,15 +44,20 @@
 
 ### 3. Copy and paste destination path of your music folder.
 
-### 4. Run the python script.
+### 4. Install requirements in terminal.
 
-### 5. After running the program on cmd, it will redirect you to google.com for your permission, grant the permission, copy the URL and paste the URL on cmd.
+### 5. Run the python script.
+
+<summary>How to install requirements</summary>
+  <h2>pip install -r requirements.txt<h2>
+
+### 6. After running the program on cmd, it will redirect you to google.com for your permission, grant the permission, copy the URL and paste the URL on cmd.
 
 ![paste URL](imggif/pasteurl.png)
 
-### 6. Follow the instructions.
+### 7. Follow the instructions.
 
-### 7. Enjoy your fav songs everywhere :scream_cat:
+### 8. Enjoy your fav songs everywhere :scream_cat:
 
 ###### If few songs are not added then the mp3 file dosen't contain proper title, album or artist name.
 
