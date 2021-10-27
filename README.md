@@ -46,10 +46,12 @@
 
 ### 4. Install requirements in terminal.
 
-### 5. Run the python script.
-
+<details>
 <summary>How to install requirements</summary>
-  <h2>pip install -r requirements.txt<h2>
+  <h4>pip install -r requirements.txt<h4>
+</details>
+
+### 5. Run the python script.
 
 ### 6. After running the program on cmd, it will redirect you to google.com for your permission, grant the permission, copy the URL and paste the URL on cmd.
 
