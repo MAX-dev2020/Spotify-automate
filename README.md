@@ -48,7 +48,7 @@
 
 <details>
 <summary>How to install requirements</summary>
-  <h4>pip install -r requirements.txt<h4>
+  <h3>pip install -r requirements.txt<h3>
 </details>
 
 ### 5. Run the python script.
