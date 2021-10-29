@@ -28,7 +28,7 @@ token = util.prompt_for_user_token(username=USERNAME,
                                    client_secret=CLIENT_SECRET,
                                    redirect_uri=REDIRECT_URI)
 
-
+notadded = []
 if token:
     sp = spotipy.Spotify(auth=token)
     hint = 0
@@ -36,6 +36,7 @@ if token:
     offset = 0
     stopp = False
     songexistlist = []
+
     albumnotfound = False
 
     wantstocreate = input(
@@ -50,7 +51,6 @@ if token:
     # enter your destination path of your music folder
     for root, dirs, files in os.walk('E:/Music'):
         for file in files:
-
             filename, extension = os.path.splitext(file)
             if (extension == '.mp3'):
                 try:
@@ -65,6 +65,7 @@ if token:
                 if 'title' in audio:
                     songname = audio['title'][0]
                     if(songname == ''):
+                        notadded.append(albumname)
                         continue
 
                 if 'artist' in audio:
@@ -78,48 +79,51 @@ if token:
 
                 limitcount = 0
                 limit = 0
-                if(albumname != ''):
-                    albumextrachar = albumname
-                    if('-' in albumextrachar):
-                        albumextrachar = albumextrachar.split("-", 1)
+                try:
+                    if(albumname != ''):
+                        albumextrachar = albumname
+                        if('-' in albumextrachar):
+                            albumextrachar = albumextrachar.split("-", 1)
 
-                        albumname = albumextrachar[0]
-                    if('[' in albumextrachar):
-                        albumname = albumextrachar.split("[", 1)
+                            albumname = albumextrachar[0]
+                        if('[' in albumextrachar):
+                            albumname = albumextrachar.split("[", 1)
 
-                        albumname = albumextrachar[0]
+                            albumname = albumextrachar[0]
 
-                    search_albumid = sp.search(q=albumname.casefold(),
-                                               limit=50, offset=0, type='album', market=None)
-                    try:
-                        album_id = search_albumid["albums"]["items"][0]["id"]
-                    except IndexError:
-                        albumnotfound = True
-                        print("album not found")
+                        search_albumid = sp.search(q=albumname.casefold(),
+                                                   limit=50, offset=0, type='album', market=None)
+                        try:
+                            album_id = search_albumid["albums"]["items"][0]["id"]
+                        except IndexError:
+                            albumnotfound = True
+                            print("album not found")
 
-                    if(albumnotfound != True):
-                        album_tracks = sp.album_tracks(
-                            album_id, limit=50, offset=0, market=None)
+                        if(albumnotfound != True):
+                            album_tracks = sp.album_tracks(
+                                album_id, limit=50, offset=0, market=None)
 
-                        total_track = album_tracks["total"]
+                            total_track = album_tracks["total"]
 
-                        limit = total_track
+                            limit = total_track
 
-                        for item in range(limit):
-                            try:
-                                input_songname = "".join(
-                                    songname.split()).replace('-', '')
-                            except NameError:
-                                stopp = True
-                                break
-                            songname_found = "".join(
-                                album_tracks["items"][item]["name"].split()).replace('-', '')
-                            if(input_songname.casefold() == songname_found.casefold()):
-                                songid = album_tracks["items"][item]["id"]
-                                list = [album_tracks["items"][item]["id"]]
+                            for item in range(limit):
+                                try:
+                                    input_songname = "".join(
+                                        songname.split()).replace('-', '')
+                                except NameError:
+                                    stopp = True
+                                    break
+                                songname_found = "".join(
+                                    album_tracks["items"][item]["name"].split()).replace('-', '')
+                                if(input_songname.casefold() == songname_found.casefold()):
+                                    songid = album_tracks["items"][item]["id"]
+                                    list = [album_tracks["items"][item]["id"]]
 
-                                break
-                            limitcount = limitcount+1
+                                    break
+                                limitcount = limitcount+1
+                except NameError:
+                    pass
 
                 songnames = True
                 artistnames = True
@@ -170,20 +174,24 @@ if token:
                             break
                         songcount = songcount+1
 
-                    if(songname != ''):
+                    if(songcount == 10 or artistnames == False):
                         try:
-                            search_song = sp.search(q=songname.casefold(),
-                                                    limit=1, offset=0, type='track', market=None)
-                            songid = search_song["tracks"]["items"][0]["id"]
-                            list = [search_song["tracks"]["items"][0]["id"]]
+                            if(songname != ''):
+                                search_song = sp.search(q=songname.casefold(),
+                                                        limit=1, offset=0, type='track', market=None)
+                                songid = search_song["tracks"]["items"][0]["id"]
+                                list = [search_song["tracks"]
+                                        ["items"][0]["id"]]
 
-                            print(json.dumps(
-                                search_song["tracks"]["items"][0]["name"], sort_keys=True, indent=4))
-                            print(json.dumps(
-                                [search_song["tracks"]["items"][0]["id"]], sort_keys=True, indent=4))
+                                print(json.dumps(
+                                    search_song["tracks"]["items"][0]["name"], sort_keys=True, indent=4))
+                                print(json.dumps(
+                                    [search_song["tracks"]["items"][0]["id"]], sort_keys=True, indent=4))
                         except NameError:
+                            notadded.append(songname)
                             continue
                         except IndexError:
+                            notadded.append(songname)
                             continue
 
                 numberofPlaylist = sp.current_user_playlists(
@@ -277,7 +285,13 @@ if token:
                             return True
                     except TypeError:
                         return True
+                    except NameError:
+                        return True
                     return True
 
                 if(addTracksToPlaylist(count) == True):
                     continue
+print("\n")
+print("songs that were not added")
+for i in range(len(notadded)):
+    print(notadded[i])
