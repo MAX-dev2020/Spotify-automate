@@ -13,6 +13,7 @@ import spotipy.util as util
 from spotipy.oauth2 import SpotifyOAuth
 import json
 import sys
+import re
 
 # "https://www.spotify.com/us/account/overview/" copy your username and paste it here
 USERNAME = ''
@@ -34,9 +35,9 @@ if token:
     hint = 0
     created = 0
     offset = 0
+    id3error = 0
     stopp = False
     songexistlist = []
-
     albumnotfound = False
 
     wantstocreate = input(
@@ -57,20 +58,22 @@ if token:
                     # enter your destination path of your music folder
                     audio = EasyID3("E:/Music/{0}.mp3".format(filename))
                 except ID3NoHeaderError:
+                    id3error += 1
                     continue
 
                 if 'album' in audio:
                     albumname = audio['album'][0]
 
                 if 'title' in audio:
-                    songname = audio['title'][0]
-                    if(songname == ''):
+                    songlist = audio['title'][0]
+                    songextrachar = songlist
+                    if(songlist == ''):
                         notadded.append(albumname)
                         continue
 
                 if 'artist' in audio:
-                    artistname = audio['artist'][0]
-                    if(',' in artistname[0]):
+                    artistnames = audio['artist'][0]
+                    if(',' in artistnames[0]):
                         newlist_artist = []
                         for string in artistname:
                             for item in string.split(','):
@@ -80,53 +83,116 @@ if token:
                 limitcount = 0
                 limit = 0
                 try:
-                    if(albumname != ''):
-                        albumextrachar = albumname
-                        if('-' in albumextrachar):
-                            albumextrachar = albumextrachar.split("-", 1)
-
-                            albumname = albumextrachar[0]
-                        if('[' in albumextrachar):
-                            albumname = albumextrachar.split("[", 1)
-
-                            albumname = albumextrachar[0]
-
-                        search_albumid = sp.search(q=albumname.casefold(),
-                                                   limit=50, offset=0, type='album', market=None)
+                    for i in range(3):
                         try:
-                            album_id = search_albumid["albums"]["items"][0]["id"]
-                        except IndexError:
-                            albumnotfound = True
-                            print("album not found")
+                            if('[' in songlist):
+                                pattern = re.search(r'\[', songlist)
+                                pattern2 = re.search(r']', songlist)
+                                songlist = songlist[:pattern.span()[0]] + \
+                                    songlist[pattern2.span()[1]:]
+                            if('(' in songlist):
+                                pattern = re.search(r'\(', songlist)
+                                pattern2 = re.search(r'\)', songlist)
+                                songlist = songlist[:pattern.span()[0]] + \
+                                    songlist[pattern2.span()[1]:]
 
-                        if(albumnotfound != True):
-                            album_tracks = sp.album_tracks(
-                                album_id, limit=50, offset=0, market=None)
+                        except AttributeError:
+                            continue
+                    if('|' in songlist):
+                        songextrachar = songlist.split("|", 1)
 
-                            total_track = album_tracks["total"]
+                        songlist = songextrachar[0]
+                    if('(' in songlist):
+                        songextrachar = songlist.split(
+                            "(                        ", 1)
 
-                            limit = total_track
+                        songlist = songextrachar[0]
+                    if('[' in songlist):
+                        songextrachar = songlist.split("[", 1)
 
-                            for item in range(limit):
-                                try:
-                                    input_songname = "".join(
-                                        songname.split()).replace('-', '')
-                                except NameError:
-                                    stopp = True
-                                    break
-                                songname_found = "".join(
-                                    album_tracks["items"][item]["name"].split()).replace('-', '')
-                                if(input_songname.casefold() == songname_found.casefold()):
-                                    songid = album_tracks["items"][item]["id"]
-                                    list = [album_tracks["items"][item]["id"]]
+                        songlist = songextrachar[0]
+                    if('-' in songlist):
+                        songextrachar = songlist.split("-", 1)
+                        ans = bool(re.search(r'\d', songextrachar[0]))
+                        if (ans == False):
+                            songlist = songextrachar[0]
+                        else:
+                            songlist = songextrachar[1]
+                    if('.' in songlist):
+                        songextrachar = songlist.split(".", 1)
 
-                                    break
-                                limitcount = limitcount+1
+                        songlist = songextrachar[0]
+                    try:
+                        pattern = re.search(r'[^a-zA-Z0-9 ]', songlist)
+                        songlist = songlist[:pattern.span()[0]] + \
+                            songlist[pattern.span()[1]:]
+                    except AttributeError:
+                        pass
+
+                    songname = songlist
+                    # print(songlist)
+                    if 'artist' in audio:
+                        artistnames = audio['artist']
+                    # print(audio['artist'])
+
+                    if(',' in artistnames[0]):
+                        for string in artistnames:
+                            for item in string.split(','):
+                                newlist_artist.append(item.strip())
+                                artistnames = newlist_artist[0]
+                        # print(artistname)
+                        # continue
+
+                    artistname = artistnames[0]
+                    for i in range(3):
+                        try:
+                            if('[' in artistname):
+                                pattern = re.search(r'\[', artistname)
+                                pattern2 = re.search(r']', artistname)
+                                artistname = artistname[:pattern.span()[0]] + \
+                                    artistname[pattern2.span()[1]:]
+                            if('(' in songlist):
+                                pattern = re.search(r'\(', artistname)
+                                pattern2 = re.search(r'\)', artistname)
+                                artistname = artistname[:pattern.span()[0]] + \
+                                    artistname[pattern2.span()[1]:]
+
+                        except AttributeError:
+                            continue
+                    if('|' in artistname):
+                        artistextrachar = artistname.split("|", 1)
+
+                        artistname = artistextrachar[0]
+                    if('(' in artistname):
+                        artistextrachar = artistname.split("(", 1)
+
+                        artistname = artistextrachar[0]
+                    if('[' in artistname):
+                        artistextrachar = artistname.split("[", 1)
+
+                        artistnamet = artistextrachar[0]
+                    if('-' in artistname):
+                        artistextrachar = artistname.split("-", 1)
+                        ans = bool(re.search(r'\d', artistextrachar[0]))
+                        if (ans == False):
+                            artistname = artistextrachar[0]
+                        else:
+                            artistname = artistextrachar[1]
+                    if('.' in artistname):
+                        artistextrachar = artistname.split('.', 1)
+                        artistname = artistextrachar[1]
+
+                    try:
+                        pattern = re.search(r'[^a-zA-Z0-9 ]', artistname)
+                        artistname = artistname[:pattern.span()[0]] + \
+                            artistname[pattern.span()[1]:]
+                    except AttributeError:
+                        pass
+
                 except NameError:
-                    pass
-
-                songnames = True
-                artistnames = True
+                    continue
+                except TypeError:
+                    continue
 
                 if(limitcount == limit or albumnotfound == True):
                     songcount = 0
@@ -135,29 +201,18 @@ if token:
                     for i in range(10):
 
                         try:
-                            songextrachar = songname
-                            if('-' in songextrachar):
-                                songextrachar = songextrachar.split("-", 1)
-
-                                songname = songextrachar[0]
-                            if('[' in songextrachar):
-                                songname = songextrachar.split("[", 1)
-
-                                songname = songextrachar[0]
-                                if(songname != ''):
-                                    search_song = sp.search(q=songname.casefold(),
-                                                            limit=10, offset=0, type='track', market=None)
-
+                            if(songname != ''):
+                                search_song = sp.search(q=songname.casefold(),
+                                                        limit=10, offset=0, type='track', market=None)
                         except NameError:
 
                             break
 
                         for j in range(31):
                             try:
-                                input_artistname = "".join(
-                                    artistname.split()).replace('.', '')
-                                artistname_found = "".join(
-                                    search_song["tracks"]["items"][i]["artists"][j]["name"] .split()).replace('.', '')
+                                input_artistname = artistname
+                                artistname_found = search_song["tracks"]["items"][i]["artists"][j]["name"]
+
                                 if(input_artistname.casefold() in artistname_found.casefold()):
                                     songid = search_song["tracks"]["items"][i]["id"]
                                     list = [search_song["tracks"]
@@ -167,14 +222,16 @@ if token:
                                     break
                             except IndexError:
                                 artistnames = False
-                                flag = 1
+                                break
+                            except NameError:
+                                artistnames = False
                                 break
 
                         if(flag == 1):
                             break
                         songcount = songcount+1
 
-                    if(songcount == 10 or artistnames == False):
+                    if(songcount == 10):
                         try:
                             if(songname != ''):
                                 search_song = sp.search(q=songname.casefold(),
@@ -282,12 +339,14 @@ if token:
                             addTrack = sp.playlist_add_items(
                                 playlist_id, list, position=0)
                             print('song added')
-                            return True
+                            return
+                        else:
+                            notadded.append(songname)
+                            return
                     except TypeError:
                         return True
                     except NameError:
                         return True
-                    return True
 
                 if(addTracksToPlaylist(count) == True):
                     continue
@@ -295,3 +354,5 @@ print("\n")
 print("songs that were not added")
 for i in range(len(notadded)):
     print(notadded[i])
+
+print(id3error, "song errors")
