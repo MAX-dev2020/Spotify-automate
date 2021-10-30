@@ -30,21 +30,29 @@
 
 [Link to the spotify developers website](https://developer.spotify.com/)
 
-![Copy this](imggif/credentials.gif)
+### 2. Go to spotify developers website, login with your spotify account.
 
-### 2. Open "spotifymain.py" and paste your credentials.
+### 3. Create an app, give the title and description about the app (just give whatever you want).
 
-![paste here](imggif/pastecreds.png)
+![create an app](imggif/CreateAnApp.jpeg)
 
-### 3. Go to spotify developers website, go to edit settings and add https://www.google.com/ as the redirect URL.
+### 4. After creating the app, go to edit settings, add https://www.google.com/ as the redirect URL.
 
 ![go to edit settings](imggif/editsettings.jpeg)
 
 ![add redirect URL](imggif/redirect.png)
 
-### 3. Copy and paste destination path of your music folder.
+### 5. Now copy your client_id and client_secret.
 
-### 4. Install requirements in terminal.
+![Copy this](imggif/credentials.gif)
+
+### 6. Open "spotifymain.py" and paste your credentials.
+
+![paste here](imggif/pastecreds.png)
+
+### 7. Copy and paste destination path of your music folder.
+
+### 8. Install requirements in terminal.
 
 <details>
 <summary>How to install requirements</summary>
