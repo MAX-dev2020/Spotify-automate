@@ -34,7 +34,7 @@
 
 ### 3. Create an app, give the title and description about the app (just give whatever you want).
 
-![create an app](imggif/createanapp.jpeg)
+![create an app](imggif/createapp.jpeg)
 
 ### 4. After creating the app, go to edit settings, add https://www.google.com/ as the redirect URL.
 
