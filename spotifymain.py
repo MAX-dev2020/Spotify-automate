@@ -31,7 +31,7 @@ token = util.prompt_for_user_token(username=USERNAME,
 
 notadded = []
 if token:
-    sp = spotipy.Spotify(auth=token)
+    sp = spotipy.Spotify(auth=token)  # gets the access token
     hint = 0
     created = 0
     offset = 0
@@ -50,36 +50,47 @@ if token:
         existingPlaylist = input(
             "Enter the name of the existing playlist: ")
     # enter your destination path of your music folder
+    # this for loop goes through the directorys which leads to your music folder
     for root, dirs, files in os.walk('E:/Music'):
         for file in files:
+            # gets the extenions of the .mp3 file
             filename, extension = os.path.splitext(file)
-            if (extension == '.mp3'):
+            if (extension == '.mp3'):  # checks if its .mp3 file
                 try:
                     # enter your destination path of your music folder
+                    # id3 is a container which stores all the meta data of the music file
                     audio = EasyID3("E:/Music/{0}.mp3".format(filename))
+                # throws exception when the song doesn't contain ID3 tag which contains the metadara
                 except ID3NoHeaderError:
                     id3error += 1
                     continue
 
-                if 'album' in audio:
+                if 'album' in audio:                         # checks if the files contains album name
+                    # if the condition is true then it gets the album name
                     albumname = audio['album'][0]
 
-                if 'title' in audio:
+                if 'title' in audio:                         # checks if the files contains title name
+                    # if the condition is true then it gets the title name
                     songlist = audio['title'][0]
                     songextrachar = songlist
-                    if(songlist == ''):
+                    if(songlist == ''):                     # checks if the title name is empty whitespace
+                        # if the music file doesn't contain anything, the for loop iterates to the next song, and appendsthe song whic hwas not added to the playlist into a list
                         notadded.append(albumname)
                         continue
 
-                if 'artist' in audio:
-                    artistnames = audio['artist'][0]
+                if 'artist' in audio:                        # checks if the files contains artist name
+                    # if the condition is true then it gets the artist name
+                    artistnames = audio['artist']
+                    # this condition is to find if there are more than one artists by checking if theres a comma in the string
                     if(',' in artistnames[0]):
                         newlist_artist = []
-                        for string in artistname:
+                        for string in artistnames:           # if theres a comma it means there are more than one artists so this splits the string
+                            # and adds the artistname into a list
                             for item in string.split(','):
                                 newlist_artist.append(item.strip())
-                                artistname = newlist_artist[0]
+                                artistnames = newlist_artist
 
+# # # # # # # # # #  code from 86 to 198 removes any characters like '.',',','[',']' or '(' other othan words and removes unwanted strings in the title and artist name #  # # # # # # # # # #
                 limitcount = 0
                 limit = 0
                 try:
@@ -99,30 +110,40 @@ if token:
                         except AttributeError:
                             continue
                     if('|' in songlist):
+                        # splits the string between  '|'
                         songextrachar = songlist.split("|", 1)
 
+                        # slects the first part of the string
                         songlist = songextrachar[0]
                     if('(' in songlist):
                         songextrachar = songlist.split(
-                            "(                        ", 1)
+                            "(", 1)  # splits the string between  '|'
 
+                        # slects the first part of the string
                         songlist = songextrachar[0]
                     if('[' in songlist):
+                        # splits the string between  '|'
                         songextrachar = songlist.split("[", 1)
 
+                        # slects the first part of the string
                         songlist = songextrachar[0]
                     if('-' in songlist):
+                        # splits the string between  '|'
                         songextrachar = songlist.split("-", 1)
+                        # checks if there's a number in the song name
                         ans = bool(re.search(r'\d', songextrachar[0]))
                         if (ans == False):
+                            # slects the first part of the string
                             songlist = songextrachar[0]
                         else:
+                            # slects the second part of the string
                             songlist = songextrachar[1]
                     if('.' in songlist):
                         songextrachar = songlist.split(".", 1)
 
                         songlist = songextrachar[0]
                     try:
+                        # searches for any character other than alphabets, numbers and whitespace
                         pattern = re.search(r'[^a-zA-Z0-9 ]', songlist)
                         songlist = songlist[:pattern.span()[0]] + \
                             songlist[pattern.span()[1]:]
@@ -131,18 +152,11 @@ if token:
 
                     songname = songlist
                     # print(songlist)
-                    if 'artist' in audio:
-                        artistnames = audio['artist']
-                    # print(audio['artist'])
 
-                    if(',' in artistnames[0]):
-                        for string in artistnames:
-                            for item in string.split(','):
-                                newlist_artist.append(item.strip())
-                                artistnames = newlist_artist[0]
-                        # print(artistname)
-                        # continue
+                    # print(artistname)
+                    # continue
 
+                    # this part for the code works just like the song name
                     artistname = artistnames[0]
                     for i in range(3):
                         try:
@@ -193,116 +207,138 @@ if token:
                     continue
                 except TypeError:
                     continue
+# # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-                if(limitcount == limit or albumnotfound == True):
-                    songcount = 0
-                    flag = 0
-                    print("songs name enteres")
-                    for i in range(10):
+# # # # # # # # # #  501 to 270 is the searching algorithm which searches for the songs accurately and fetches the song id  # # # # # # # # # # # # # # # # # # # # # # # # # #
+                print(artistname)
+                print(songname)
+                songcount = 0
+                flag = 0
+                print("songs name enteres")
+                for i in range(10):
 
+                    try:
+                        if(songname != ''):
+                            search_song = sp.search(q=songname.casefold(),
+                                                    limit=10, offset=0, type='track', market=None)  # "search" API references gets the song name
+                    except NameError:
+
+                        break
+
+                    for j in range(31):
                         try:
-                            if(songname != ''):
-                                search_song = sp.search(q=songname.casefold(),
-                                                        limit=10, offset=0, type='track', market=None)
-                        except NameError:
+                            input_artistname = artistname
+                            # this line gets the song name from the json output
+                            artistname_found = search_song["tracks"]["items"][i]["artists"][j]["name"]
 
-                            break
-
-                        for j in range(31):
-                            try:
-                                input_artistname = artistname
-                                artistname_found = search_song["tracks"]["items"][i]["artists"][j]["name"]
-
-                                if(input_artistname.casefold() in artistname_found.casefold()):
-                                    songid = search_song["tracks"]["items"][i]["id"]
-                                    list = [search_song["tracks"]
-                                            ["items"][i]["id"]]
-
-                                    flag = 1
-                                    break
-                            except IndexError:
-                                artistnames = False
-                                break
-                            except NameError:
-                                artistnames = False
-                                break
-
-                        if(flag == 1):
-                            break
-                        songcount = songcount+1
-
-                    if(songcount == 10):
-                        try:
-                            if(songname != ''):
-                                search_song = sp.search(q=songname.casefold(),
-                                                        limit=1, offset=0, type='track', market=None)
-                                songid = search_song["tracks"]["items"][0]["id"]
+                            # checks if the artist name is correct
+                            if(input_artistname.casefold() in artistname_found.casefold()):
+                                # stores the song id into the variable called "songid"
+                                songid = search_song["tracks"]["items"][i]["id"]
                                 list = [search_song["tracks"]
-                                        ["items"][0]["id"]]
+                                        ["items"][i]["id"]]
 
-                                print(json.dumps(
-                                    search_song["tracks"]["items"][0]["name"], sort_keys=True, indent=4))
-                                print(json.dumps(
-                                    [search_song["tracks"]["items"][0]["id"]], sort_keys=True, indent=4))
-                        except NameError:
-                            notadded.append(songname)
-                            continue
+                                flag = 1
+                                break
                         except IndexError:
-                            notadded.append(songname)
-                            continue
+                            artistnames = False
+                            break
+                        except NameError:
+                            artistnames = False
+                            break
+
+                    if(flag == 1):
+                        break
+                    songcount = songcount+1
+
+                # if theres no proper artist name, then this algo searches  for the song using only song name
+                if(songcount == 10):
+                    print("enter search onsg")
+                    try:
+                        if(songname != ''):
+                            search_song = sp.search(q=songname.casefold(),  # searches the song
+                                                    limit=1, offset=0, type='track', market=None)
+                            songid = search_song["tracks"]["items"][0]["id"]
+                            list = [search_song["tracks"]
+                                    ["items"][0]["id"]]
+
+                            print(json.dumps(
+                                search_song["tracks"]["items"][0]["name"], sort_keys=True, indent=4))
+                            print(json.dumps(
+                                [search_song["tracks"]["items"][0]["id"]], sort_keys=True, indent=4))
+                    except NameError:
+                        notadded.append(songname)
+                        continue
+                    except IndexError:
+                        notadded.append(songname)
+                        continue
+ # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #
 
                 numberofPlaylist = sp.current_user_playlists(
-                    limit=50, offset=0)
+                    limit=50, offset=0)                        # gets the totla number of user playlists
                 count = 0
                 for item in range(50):
                     try:
                         playlistName = numberofPlaylist["items"][item]["name"]
+                        # this for loop is a counter which gets the total number of user playlists
                         count = count+1
                     except IndexError:
                         break
 
                 print(count)
 
+ # # # # # # # # # # # # # # # # # # # # # # # # The function  createPlaylist creates a new playlist # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #
+
                 def createPlaylist(count):
 
                     flag = 0
                     userPlaylist = sp.current_user_playlists(
-                        limit=count, offset=0)
+                        limit=count, offset=0)   # gets the user playlists
                     for item in range(count):
                         playlistName = userPlaylist["items"][item]["name"]
+                        # checks if  there's a playlist with the same name or not
                         if(playlistName.casefold() == newplaylistname.casefold()):
                             flag = 1
+                            # if its true then it returns 1
                             print("playlist already exixts")
                             return 1
                     if(flag != 1):
                         createplaylist = sp.user_playlist_create(
-                            USERNAME, newplaylistname, public=False, collaborative=False, description='My project')
+                            USERNAME, newplaylistname, public=False, collaborative=False, description='My project')  # if there's no playlist with the same name it creates a new playlist
                         newplaylistid = sp.current_user_playlists(
-                            limit=1, offset=0)
+                            limit=1, offset=0)  # gets the playlsit id
                         newplaylistid = newplaylistid["items"][0]["id"]
                     else:
                         print(json.dumps(playlistName, sort_keys=True, indent=4))
 
                     return newplaylistid
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ # # # # # # # # # # # # # # # the function addTracksToPlaylist adds songs to the user playlist # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
                 def addTracksToPlaylist(count):
                     exists = 0
                     global created
 
+                    # checks if user wants to create a new playlist or not
                     if (wantstocreate == '0' and created == 0):
+                        # if its true then it calls the function createPlaylist
                         playlist_id = createPlaylist(count)
                         global existingPlaylist
-                        created = 1
+                        created = 1  # if the new playlist is created then the variable created is equal to 1
                         existingPlaylist = newplaylistname
+                        # if the playlist already exits with the same name then the program stops with a message
                         if(playlist_id == 1):
                             sys.exit()
 
                     else:
                         userPlaylist = sp.current_user_playlists(
-                            limit=count, offset=0)
+                            limit=count, offset=0)  # is the doesn't wants to create a new playlist then gets the user current playlsits
                         for item in range(count):
                             playlistName = userPlaylist["items"][item]["name"]
 
+                            # checks if the  name of the playlist given by the user is same as the name of the existing playlist
                             if(playlistName == existingPlaylist):
                                 try:
                                     playlist_id = userPlaylist["items"][item]["id"]
@@ -312,10 +348,11 @@ if token:
                                     sys.exit()
 
                     results = sp.user_playlist_tracks(
-                        USERNAME, playlist_id)
+                        USERNAME, playlist_id)  # gets all the tracks in the user playlist
                     tracks = results['items']
                     totaltracks = 0
                     while results['next']:
+                        # gets the name of all the tracks in the user playlist
                         results = sp.next(results)
                         tracks.extend(results['items'])
 
@@ -325,6 +362,7 @@ if token:
                     for i in range(totaltracks):
                         try:
                             existingtrack = tracks[i]["track"]["id"]
+                            # checks if the song  exists in the playlist or not
                             if(existingtrack == songid):
                                 print("song already exists")
                                 exists = 1
@@ -335,13 +373,11 @@ if token:
                             return True
                     print(playlist_id)
                     try:
+                        # if the song doesn't alreay exists in the playlsit then it adds the song
                         if(exists != 1):
-                            addTrack = sp.playlist_add_items(
+                            addTrack = sp.playlist_add_items(  # adds the song to the playlist
                                 playlist_id, list, position=0)
                             print('song added')
-                            return
-                        else:
-                            notadded.append(songname)
                             return
                     except TypeError:
                         return True
@@ -350,9 +386,8 @@ if token:
 
                 if(addTracksToPlaylist(count) == True):
                     continue
-print("\n")
-print("songs that were not added")
-for i in range(len(notadded)):
-    print(notadded[i])
 
-print(id3error, "song errors")
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+
+print(id3error, "Id3 errors")
