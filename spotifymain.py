@@ -117,18 +117,18 @@ if token:
                         songlist = songextrachar[0]
                     if('(' in songlist):
                         songextrachar = songlist.split(
-                            "(", 1)  # splits the string between  '|'
+                            "(", 1)  # splits the string between  '('
 
                         # selects the first part of the string
                         songlist = songextrachar[0]
                     if('[' in songlist):
-                        # splits the string between  '|'
+                        # splits the string between  '['
                         songextrachar = songlist.split("[", 1)
 
                         # selects the first part of the string
                         songlist = songextrachar[0]
                     if('-' in songlist):
-                        # splits the string between  '|'
+                        # splits the string between  ']'
                         songextrachar = songlist.split("-", 1)
                         # checks if there's a number in the song name
                         ans = bool(re.search(r'\d', songextrachar[0]))
