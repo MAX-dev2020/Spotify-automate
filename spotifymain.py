@@ -113,19 +113,19 @@ if token:
                         # splits the string between  '|'
                         songextrachar = songlist.split("|", 1)
 
-                        # slects the first part of the string
+                        # selects the first part of the string
                         songlist = songextrachar[0]
                     if('(' in songlist):
                         songextrachar = songlist.split(
                             "(", 1)  # splits the string between  '|'
 
-                        # slects the first part of the string
+                        # selects the first part of the string
                         songlist = songextrachar[0]
                     if('[' in songlist):
                         # splits the string between  '|'
                         songextrachar = songlist.split("[", 1)
 
-                        # slects the first part of the string
+                        # selects the first part of the string
                         songlist = songextrachar[0]
                     if('-' in songlist):
                         # splits the string between  '|'
@@ -133,17 +133,17 @@ if token:
                         # checks if there's a number in the song name
                         ans = bool(re.search(r'\d', songextrachar[0]))
                         if (ans == False):
-                            # slects the first part of the string
+                            # selects the first part of the string
                             songlist = songextrachar[0]
                         else:
-                            # slects the second part of the string
+                            # selects the second part of the string
                             songlist = songextrachar[1]
                     if('.' in songlist):
                         songextrachar = songlist.split(".", 1)
 
                         songlist = songextrachar[0]
                     try:
-                        # searches for any character other than alphabets, numbers and whitespace
+                        # searches for  charactes other than alphabets, numbers and whitespace
                         pattern = re.search(r'[^a-zA-Z0-9 ]', songlist)
                         songlist = songlist[:pattern.span()[0]] + \
                             songlist[pattern.span()[1]:]
@@ -275,7 +275,7 @@ if token:
  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #
 
                 numberofPlaylist = sp.current_user_playlists(
-                    limit=50, offset=0)                        # gets the totla number of user playlists
+                    limit=50, offset=0)                        # gets the total number of user playlists
                 count = 0
                 for item in range(50):
                     try:
@@ -391,3 +391,9 @@ if token:
 #
 
 print(id3error, "Id3 errors")
+# print("\n")
+# print("songs that were not added")  # prints the songs that were not added
+# for i in range(len(notadded)):
+#     print(notadded[i])
+
+# print(id3error, "song errors")
