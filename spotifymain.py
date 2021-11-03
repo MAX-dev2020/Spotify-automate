@@ -16,10 +16,10 @@ import sys
 import re
 
 # "https://www.spotify.com/us/account/overview/" copy your username and paste it here
-USERNAME = '1hja3phrnit6soklb701fpgwo'
+USERNAME = ''
 # go to "https://developer.spotify.com/",  login with your spotify account and copy your client_id and client_secert and paste it here
-CLIENT_ID = '8b5f0833529e42f9bed4ff29f85f0fb3'
-CLIENT_SECRET = '3d8b025fd0614c08b364d341aa874380'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
 
@@ -285,9 +285,7 @@ if token:
                                     songid = search_song["tracks"]["items"][i]["id"]
                                     list = [search_song["tracks"]
                                             ["items"][i]["id"]]
-
                                     done = 0
-
                             else:
                                 songnotfound = 1
                                 done = 1
