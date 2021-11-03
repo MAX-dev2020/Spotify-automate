@@ -16,10 +16,10 @@ import sys
 import re
 
 # "https://www.spotify.com/us/account/overview/" copy your username and paste it here
-USERNAME = ''
+USERNAME = '1hja3phrnit6soklb701fpgwo'
 # go to "https://developer.spotify.com/",  login with your spotify account and copy your client_id and client_secert and paste it here
-CLIENT_ID = ''
-CLIENT_SECRET = ''
+CLIENT_ID = '8b5f0833529e42f9bed4ff29f85f0fb3'
+CLIENT_SECRET = '3d8b025fd0614c08b364d341aa874380'
 REDIRECT_URI = 'https://www.google.com/'
 SCOPE = 'user-library-modify', 'playlist-modify-private', 'user-library-read', 'playlist-read-private'
 
@@ -36,7 +36,6 @@ if token:
     created = 0
     offset = 0
     id3error = 0
-    stopp = False
     songexistlist = []
     albumnotfound = False
 
@@ -261,14 +260,14 @@ if token:
                     pass
 # # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# # # # # # # # # #  264 to 328 is the searching algorithm which searches for the songs accurately and fetches the song id  # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # #  264 to 352 is the searching algorithm which searches for the songs accurately and fetches the song id  # # # # # # # # # # # # # # # # # # # # # # # # # #
                 print(artistname)
                 print(songname)
                 songcount = 0
                 flag = 0
                 songnotfound = 0
                 done = 1
-                print("songs name enteres")
+                print("songs name enters")
                 for i in range(10):
 
                     try:
@@ -276,7 +275,6 @@ if token:
                             search_song = sp.search(q='artist:' + artistname + ' track:' + songname, limit=10,
                                                     type='track', market=None)  # "search" API reference gets the song name
                     except NameError:
-
                         break
 
                     try:
@@ -304,12 +302,13 @@ if token:
                         break
 
                 # if theres no proper artist name, then this algo searches  for the song using only song name
+                songstillnotfound = 1
                 if(artistname == '' or songnotfound == 1):
                     songnotfound = 0
                     print("enter search song")
                     try:
                         if(songname != ''):
-                            search_song = sp.search(q=songname.casefold(),  # searches the song
+                            search_song = sp.search(q='artist:' + artistname.casefold() + ' track:' + songname.casefold(),  # searches the song
                                                     limit=1, offset=0, type='track', market=None)
                             songid = search_song["tracks"]["items"][0]["id"]
                             list = [search_song["tracks"]
@@ -321,10 +320,36 @@ if token:
                                 [search_song["tracks"]["items"][0]["id"]], sort_keys=True, indent=4))
                     except NameError:
                         notadded.append(songname)
+                        print("nameError")
                         continue
                     except IndexError:
                         notadded.append(songname)
+                        print("indexError")
+                        songstillnotfound = 0
+                        pass
+
+                if (songstillnotfound == 0):
+                    try:
+                        if(songname != ''):
+                            search_song = sp.search(q=songname,  # searches the song
+                                                    limit=1, offset=0, type='track', market=None)
+                            songid = search_song["tracks"]["items"][0]["id"]
+                            list = [search_song["tracks"]
+                                    ["items"][0]["id"]]
+
+                            print(json.dumps(
+                                search_song["tracks"]["items"][0]["name"], sort_keys=True, indent=4))
+                            print(json.dumps(
+                                [search_song["tracks"]["items"][0]["id"]], sort_keys=True, indent=4))
+                    except NameError:
+                        notadded.append(songname)
+                        print("nameError")
                         continue
+                    except IndexError:
+                        notadded.append(songname)
+                        print("indexError")
+                        continue
+
 #  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #  # # # # # # # # # # # # # # # # # # # # # # # # # #
                 numberofPlaylist = sp.current_user_playlists(
                     limit=50, offset=0)                        # gets the total number of user playlists
@@ -430,7 +455,7 @@ if token:
                             return True
                     print(playlist_id)
                     try:
-                        # if the song doesn't alreay exists in the playlsit then it adds the song
+                        # if the song doesn't already exists in the playlsit then it adds the song
                         if(exists != 1):
                             addTrack = sp.playlist_add_items(  # adds the song to the playlist
                                 playlist_id, list, position=0)
