@@ -69,6 +69,6 @@
 
 ### 8. Enjoy your fav songs everywhere :scream_cat:
 
-###### If few songs are not added then the mp3 file dosen't contain proper title, album or artist name.
+###### If the songs are not added or the song added is different from the local song then the mp3 file dosen't contain proper title, album or artist name.
 
 https://user-images.githubusercontent.com/60339025/138585994-c9ea4317-d263-4577-9de9-58056fe079d7.mp4
