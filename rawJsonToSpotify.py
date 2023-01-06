@@ -88,7 +88,6 @@ if token:
     print(len(songexistlist))
     # remove 1 to 100 songs from the songexistlist
     c = 0
-    k = 0
     songexistlist.reverse()
     for k in range(len(songexistlist)):
         if c == 300:
